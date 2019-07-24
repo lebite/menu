@@ -120,6 +120,6 @@ Message: NOT FOUND
 
 Code: 200
 
-<_If post is not successful, return_>
+<_If put is not successful, return_>
  
 Code: 400
