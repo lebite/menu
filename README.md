@@ -1,13 +1,17 @@
-# Restaurant Menus module
--*NOTE renamed 'menus' to 'restaurant_menus' to remove any future conflict or confusion with a navigation menu*
+#  Menu CRUD API
 
-What are your service's inputs and outputs (API Spec)?
+MENU API SPECS
 
 `GET /:restaurant_id/restaurant_menus/`
 
 **Input**: `restaurant_id` identifies which restaurant to get menus
 
-**Output**: JSON of current restaurant menu(s) data
+**Output**: 
+
+<_If `restaurant_id` is found in database, return_>
+
+CODE: 200
+CONTENT: JSON of current restaurant menu(s) data
 
 ```
 {
@@ -30,44 +34,92 @@ What are your service's inputs and outputs (API Spec)?
 }
 ```
 
-### Bare Minimum Requirements:
+<_If `restaurant_id` is not found in database, return_>
+CODE: 404
+MESSAGE: Restaurant not found
 
-- Upon module initialization get current restaurant menu(s) information from the database
-  - *If no menu information exists render link to restaurant website instead of the following steps*
-- Generate/render button(s) for each menu
-- Render first menu information
-- Render/switch menu information if user clicks a different menu than one currently rendered
+`POST /restaurant_menus/add`
 
-### Stretch Goals:
+**Input**: JSON new restaurant menu data
 
-- Expand/Collapse feature
-  - Toggle button to show all of a menu (Expand) or only a small preview (Collapse)
-  - Transparency gradient and toggle button overlay when collapsed
-  - Floating Expand/Collapse button
-    - If you click “Expand” it will switch to “Collapse” and float on bottom of page before being anchored to bottom if you scroll to the end of menu
-
-### Data Schema:
-MongoDB is being used. A database with the capability of having a dynamic/versatile schema was preferred because there is menu structure variability among the different restaurants.
-
-Mongoose Schema
 ```
-let menuSchema = new mongoose.Schema({
-  restaurant_id: Number,
-  website: String,
-  menus: [{
-    menu_name: String,
-    menu_description: String,
-    sections: [{
-      section_name: String,
-      section_description: String,
-      items: [{
-        item_name: String,
-        item_description: String,
-        item_price: Number,
-        item_option: String
-      }]                      
-    }]
-  }]
-});
+{
+  “restaurant_id”: <number>,
+  "website": <string>,
+  “menus”: [{
+    “menu_name”: <string>,
+    “menu_description”: <string>,
+    “sections”: [{
+      “section_name”: <string>,
+      “section_description”: <string>,
+      “items”: [{
+        “item_name”: <string>,
+        “item_description”: <string>,
+        “item_price”: <number>,
+        “item_option”: <string>
+        }, … ] 
+    }, … ]
+  }, … ]
+}
 ```
 
+**Output**: 
+
+<_If post is successful, return_>
+
+Code: 201 
+Message: OK
+
+<_If post is not successful, return_>
+
+Code: 400
+Message: BAD REQUEST 
+
+`DELETE /:restaurant_id/restaurant_menus/`
+
+**Input**: `restaurant_id` identifies which restaurant to delete menu
+
+**Output**: 
+
+<_If delete is successful, return_>
+
+Code: 200 
+Message: OK
+
+<_If post is not successful, return_>
+
+Code: 404
+Message: NOT FOUND  
+
+`PUT /:restaurant_id/restaurant_menus/`
+
+**Input**: `restaurant_id` and JSON restaurant new menu data
+
+```
+{
+  “restaurant_id”: <number>,
+  "website": <string>,
+  “menus”: [{
+    “menu_name”: <string>,
+    “menu_description”: <string>,
+    “sections”: [{
+      “section_name”: <string>,
+      “section_description”: <string>,
+      “items”: [{
+        “item_name”: <string>,
+        “item_description”: <string>,
+        “item_price”: <number>,
+        “item_option”: <string>
+        }, … ] 
+    }, … ]
+  }, … ]
+}
+```
+
+<_If put is successful, return_>
+
+Code: 200
+
+<_If post is not successful, return_>
+ 
+Code: 400
