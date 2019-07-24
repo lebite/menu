@@ -1,6 +1,8 @@
-#  Le Bite Menu CRUD API 
+#  Le Bite Menu API 
 
-**MENU API SPECS**
+Routes and responses for creating, reading, updating and deleting Le Bite's menu feature. 
+
+# GET
 
 `GET /:restaurant_id/restaurant_menus/`
 
@@ -43,6 +45,8 @@ _If `restaurant_id` is not found in database, return:_
 
 **Message:** Restaurant not found
 
+# POST
+
 `POST /restaurant_menus/add`
 
 **INPUT**: 
@@ -84,6 +88,8 @@ _If post is not successful, return:_
 
 **Message:** BAD REQUEST 
 
+# DELETE
+
 `DELETE /:restaurant_id/restaurant_menus/`
 
 **INPUT:** 
@@ -102,6 +108,8 @@ _If post is not successful, return:_
 
 **Code:** 404
 **Message:** NOT FOUND  
+
+# PUT
 
 `PUT /:restaurant_id/restaurant_menus/`
 
