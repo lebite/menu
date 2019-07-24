@@ -1,17 +1,20 @@
-#  Menu CRUD API
+#  Le Bite Menu CRUD API 
 
-MENU API SPECS
+**MENU API SPECS**
 
 `GET /:restaurant_id/restaurant_menus/`
 
-**Input**: `restaurant_id` identifies which restaurant to get menus
+**INPUT**: 
 
-**Output**: 
+`restaurant_id` identifies which restaurant to get menus
 
-<_If `restaurant_id` is found in database, return_>
+**OUTPUT**:
 
-CODE: 200
-CONTENT: JSON of current restaurant menu(s) data
+_If `restaurant_id` is found in database, return:_ 
+
+**Code:** 200
+
+**Content:** JSON of current restaurant menu(s) data:
 
 ```
 {
@@ -34,13 +37,17 @@ CONTENT: JSON of current restaurant menu(s) data
 }
 ```
 
-<_If `restaurant_id` is not found in database, return_>
-CODE: 404
-MESSAGE: Restaurant not found
+_If `restaurant_id` is not found in database, return:_
+
+**Code:** 404
+
+**Message:** Restaurant not found
 
 `POST /restaurant_menus/add`
 
-**Input**: JSON new restaurant menu data
+**INPUT**: 
+
+JSON new restaurant menu data
 
 ```
 {
@@ -63,37 +70,42 @@ MESSAGE: Restaurant not found
 }
 ```
 
-**Output**: 
+**OUTPUT**: 
 
-<_If post is successful, return_>
+_If post is successful, return:_
 
-Code: 201 
-Message: OK
+**Code:** 201 
 
-<_If post is not successful, return_>
+**Message:** OK
 
-Code: 400
-Message: BAD REQUEST 
+_If post is not successful, return:_
+
+**Code:** 400
+
+**Message:** BAD REQUEST 
 
 `DELETE /:restaurant_id/restaurant_menus/`
 
-**Input**: `restaurant_id` identifies which restaurant to delete menu
+**INPUT:** 
 
-**Output**: 
+`restaurant_id` identifies which restaurant to delete menu
 
-<_If delete is successful, return_>
+**OUTPUT:** 
 
-Code: 200 
-Message: OK
+_If delete is successful, return:_
 
-<_If post is not successful, return_>
+**Code:** 200
 
-Code: 404
-Message: NOT FOUND  
+**Message:** OK
+
+_If post is not successful, return:_ 
+
+**Code:** 404
+**Message:** NOT FOUND  
 
 `PUT /:restaurant_id/restaurant_menus/`
 
-**Input**: `restaurant_id` and JSON restaurant new menu data
+**INPUT:**: `restaurant_id` and JSON restaurant new menu data
 
 ```
 {
@@ -116,10 +128,13 @@ Message: NOT FOUND
 }
 ```
 
-<_If put is successful, return_>
+**OUTPUT:** 
 
-Code: 200
+_If put is successful, return:_
 
-<_If put is not successful, return_>
+**Code:** 200
+
+_If put is not successful, return:_
  
-Code: 400
+**Code:** 400
+
