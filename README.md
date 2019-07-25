@@ -8,7 +8,7 @@ Routes and responses for creating, reading, updating and deleting Le Bite's menu
 
 **INPUT**: 
 
-Takes a query parameteter that is an integer (`:id`) which identifies the restaurant to retrieve menus from. 
+Takes a query parameter that is an integer (`:id`) which identifies the restaurant to retrieve menus from. 
 
 **OUTPUT**:
 
@@ -91,7 +91,7 @@ _If post is not successful, returns:_
 
 **INPUT:** 
 
-Takes a query parameteter that is an integer (`id`) which identifies the restaurant to delete all menus from. 
+Takes a query parameter that is an integer (`id`) which identifies the restaurant to delete all menus from. 
 
 **OUTPUT:** 
 
@@ -112,7 +112,7 @@ _If post is not successful, returns:_
 
 **INPUT:**: 
 
-Takes a query parameteter that is an integer (`restaurant_id`) and JSON object for restaurant's new menus. The data should be formatted as follows:
+Takes a query parameteter that is an integer (`id`) and JSON object for a restaurant's new menus. The data should be formatted as follows:
 
 ```
 {
