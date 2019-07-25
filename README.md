@@ -4,15 +4,15 @@ Routes and responses for creating, reading, updating and deleting Le Bite's menu
 
 # GET
 
-`GET /:restaurant_id/restaurant_menus/`
+`GET /:id/restaurant_menus/`
 
 **INPUT**: 
 
-`restaurant_id` identifies which restaurant to get menus
+Takes a query parameteter that is an integer (`:id`) which identifies the restaurant to retrieve menus from. 
 
 **OUTPUT**:
 
-_If `restaurant_id` is found in database, return:_ 
+_If `id` is found in database, returns:_ 
 
 **Code:** 200
 
@@ -39,7 +39,7 @@ _If `restaurant_id` is found in database, return:_
 }
 ```
 
-_If `restaurant_id` is not found in database, return:_
+_If `id` is not found in database, returns:_
 
 **Code:** 404
 
@@ -47,22 +47,19 @@ _If `restaurant_id` is not found in database, return:_
 
 # POST
 
-`POST /restaurant_menus/add`
+`POST add/restaurant_menus/`
 
 **INPUT**: 
 
-JSON new restaurant menu data
+Takes in JSON object for a new restaurant's menu. The data should be formatted as follows: 
 
 ```
 {
   “restaurant_id”: <number>,
-  "website": <string>,
   “menus”: [{
     “menu_name”: <string>,
-    “menu_description”: <string>,
     “sections”: [{
       “section_name”: <string>,
-      “section_description”: <string>,
       “items”: [{
         “item_name”: <string>,
         “item_description”: <string>,
@@ -76,13 +73,13 @@ JSON new restaurant menu data
 
 **OUTPUT**: 
 
-_If post is successful, return:_
+_If post is successful, returns:_
 
 **Code:** 201 
 
 **Message:** OK
 
-_If post is not successful, return:_
+_If post is not successful, returns:_
 
 **Code:** 400
 
@@ -90,41 +87,40 @@ _If post is not successful, return:_
 
 # DELETE
 
-`DELETE /:restaurant_id/restaurant_menus/`
+`DELETE /:id/restaurant_menus/`
 
 **INPUT:** 
 
-`restaurant_id` identifies which restaurant to delete menu
+Takes a query parameteter that is an integer (`id`) which identifies the restaurant to delete all menus from. 
 
 **OUTPUT:** 
 
-_If delete is successful, return:_
+_If delete is successful, returns:_
 
 **Code:** 200
 
 **Message:** OK
 
-_If post is not successful, return:_ 
+_If post is not successful, returns:_ 
 
 **Code:** 404
 **Message:** NOT FOUND  
 
 # PUT
 
-`PUT /:restaurant_id/restaurant_menus/`
+`PUT /:id/restaurant_menus/`
 
-**INPUT:**: `restaurant_id` and JSON restaurant new menu data
+**INPUT:**: 
+
+Takes a query parameteter that is an integer (`restaurant_id`) and JSON object for restaurant's new menus. The data should be formatted as follows:
 
 ```
 {
   “restaurant_id”: <number>,
-  "website": <string>,
   “menus”: [{
     “menu_name”: <string>,
-    “menu_description”: <string>,
     “sections”: [{
       “section_name”: <string>,
-      “section_description”: <string>,
       “items”: [{
         “item_name”: <string>,
         “item_description”: <string>,
@@ -138,11 +134,12 @@ _If post is not successful, return:_
 
 **OUTPUT:** 
 
-_If put is successful, return:_
+_If put is successful, returns:_
 
 **Code:** 200
 
-_If put is not successful, return:_
+_If put is not successful, returns:_
  
 **Code:** 400
+
 
