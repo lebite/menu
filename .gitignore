@@ -1,3 +1,4 @@
 node_modules
 coverage
 config/menus.pem
+ .DS_Store
