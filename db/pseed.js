@@ -3,7 +3,7 @@ const faker = require('faker');
 const fs = require('fs');
 
 const writeRestaurantsFile = fs.createWriteStream('restaurants.csv');
-const writeRestaurantsFile = fs.createWriteStream('restaurants.csv', {flags: 'a'});
+// const writeRestaurantsFile = fs.createWriteStream('restaurants.csv', {flags: 'a'});
 const writeMenusFile = fs.createWriteStream('menus.csv');
 const writeSectionsFile = fs.createWriteStream('sections.csv');
 const writeItemsFile = fs.createWriteStream('items.csv');
