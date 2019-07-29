@@ -6,8 +6,8 @@ const fs = require('fs');
 // const writeRestaurantsFile = fs.createWriteStream('restaurants.csv', {flags: 'a'});
 const writeRestMenuFile = fs.createWriteStream('rest_menu.csv');
 const writeRestMenuSectFile = fs.createWriteStream('rest_menu_sect.csv');
-// const writeMenusFile = fs.createWriteStream('menus.csv');
-// const writeSectionsFile = fs.createWriteStream('sections.csv');
+const writeMenusFile = fs.createWriteStream('menus.csv');
+const writeSectionsFile = fs.createWriteStream('sections.csv');
 const writeItemsFile = fs.createWriteStream('items.csv');
 
 const menuSections = ['Tromp', 'Bode', 'Zboncak', 'Dare', 'Olson', 'Crist', 'Bauch', 'Bode', 'Torp', 'Gulgowski', 'Leuschke', 
@@ -116,7 +116,8 @@ function writeItemsIntoFile(writer, encoding, callback) {
 
 // writeIntoFile(writeRestaurantsFile, restaurants, 'utf8', () => console.log('writeRestaurantsFile complete'));
 
-// writeIntoFile(writeMenusFile, allMenus, 'utf8', () => console.log('writeMenusFiles complete'));
+writeIntoFile(writeMenusFile, allMenus, 'utf8', () => console.log('writeMenusFiles complete'));
+writeIntoFile(writeSectionsFile, menuSections, 'utf8', () => console.log('writeSectionFiles complete'));
 writeToRestMenuFile(writeRestMenuFile, 'utf8', () => {
   console.log('RestMenu complete');
   writeToRestMenuSectFile(writeRestMenuSectFile, 'utf8', () => {
@@ -125,8 +126,6 @@ writeToRestMenuFile(writeRestMenuFile, 'utf8', () => {
   });
 });
   
-// writeIntoFile(writeSectionsFile, sections, 'utf8', () => console.log('writeSectionFiles complete'));
-// writeItemsIntoFile(writeItemsFile, 'utf8', () => {});
 
 // \copy menus (menu_name) FROM '/Users/TinaLe/Le_Bite/menu/db/menus.csv' WITH (FORMAT csv);
 // \copy items (item_name, item_description, price, restaurant_menu_section_id) FROM '/Users/TinaLe/Le_Bite/menu/db/menus.csv' WITH (FORMAT csv);
