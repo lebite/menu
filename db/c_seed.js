@@ -3,7 +3,7 @@
 const faker = require('faker');
 const fs = require('fs');
 
-const writeCassandraFile = fs.createWriteStream('cassandra5.csv');
+const writeCassandraFile = fs.createWriteStream('cassandra_test.csv');
 
 
 function writeIntoFile(writer, encoding, callback) {
@@ -36,8 +36,8 @@ function writeIntoFile(writer, encoding, callback) {
             }
           }
         }
-      } while (i  > 8000000 && ok);
-    if (i > 8000000) {
+      } while (i  > 0 && ok);
+    if (i > 0) {
       writer.once('drain', write);
     }
   }
