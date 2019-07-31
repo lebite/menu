@@ -1,6 +1,6 @@
 \c le_bite_menu 
 
-DROP TABLE if exists restaurant; 
+-- DROP TABLE if exists restaurant; 
 
 CREATE TABLE restaurant(
     ID serial,
@@ -49,5 +49,15 @@ CREATE TABLE items(
     restaurant_menu_section_id integer
 );
 
+CREATE INDEX idx_restaurant_menus_restaurant_id 
+ON restaurant_menus(restaurant_id);
 
+CREATE INDEX idx_restaurant_menu_section_restaurant_menus_id
+ON restaurant_menu_section(restaurant_menus_id);
+
+CREATE INDEX idx_sections_section_name
+ON sections(section_name); 
+
+CREATE INDEX idx_menus_menu_name
+ON menus(menu_name);
 
