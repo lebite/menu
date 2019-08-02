@@ -25,7 +25,8 @@ class Menus extends React.Component {
     const { restaurantID } = this.state;
     axios.get(`/${restaurantID}/menus`)
       .then((res) => {
-        this.setState({ restaurantData: res.data[0] });
+        // this.setState({ restaurantData: res.data[0] });
+        this.setState({ restaurantData: res.data });
       })
       .catch((err) => {
         console.log(err);
