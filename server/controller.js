@@ -43,13 +43,31 @@ const parseMenus = (data, id) => {
 };
 
 module.exports.getMenus = (req, res) => { 
-  const query = `SELECT * FROM bite_menus WHERE restaurant_id = ?`;
-  const params = [`${req.params.restaurant_id}`];
-
-  db.client.execute(query, params, { prepare: true })
-    .then(result => res.send(parseMenus(result, params[0])))
-    .catch(err => res.Status(500).send(err));
+  return db.client2.get(req.params.restaurant_id, (err, result) => {
+    if (result) {
+      console.log('cached');
+      const resultJSON = JSON.parse(result);
+      return res.status(200).json(resultJSON);
+    }
+    const query = `SELECT * FROM bite_menus WHERE restaurant_id = ?`;
+    const params = [`${req.params.restaurant_id}`];
+    return db.client.execute(query, params, { prepare: true })
+      .then(result => {
+        db.client2.setex(req.params.restaurant_id, 3600, JSON.stringify(parseMenus(result, params[0])));
+        res.send(parseMenus(result, params[0]))
+      })
+      .catch(err => res.Status(500).send(err));
+  });
 };
+
+// module.exports.getMenus = (req, res) => { 
+//   const query = `SELECT * FROM bite_menus WHERE restaurant_id = ?`;
+//   const params = [`${req.params.restaurant_id}`];
+
+//   db.client.execute(query, params, { prepare: true })
+//     .then(result => res.send(parseMenus(result, params[0])))
+//     .catch(err => res.Status(500).send(err));
+// };
 
 module.exports.addItem = (req, res) => {
   const query = ` INSERT INTO bite_menus (restaurant_id, menu, section, item, description, price) VALUES (?, ?, ?, ?, ?, ?)`;
