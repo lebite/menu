@@ -1,18 +1,12 @@
-const newrelic = require('newrelic')
+const newrelic = require('newrelic');
 const express = require('express');
 const expressStaticGzip = require('express-static-gzip');
 const path = require('path');
-const Restaurant = require('./db/Restaurant.js');
 const controller = require('./controller.js');
 const bodyParser = require('body-parser');
-const redis = require('redis');
+const db = require('./db/index.js');
 
 
-const client2 = redis.createClient();
-
-client2.on('error', (err) => {
-  console.log("Error " + err);
-});
 
 
 const app = express();
@@ -32,6 +26,27 @@ app.use('/:restaurant_id', expressStaticGzip(path.join(__dirname, '/../public/')
 
 
 app.get('/:restaurant_id/menus', controller.getMenus);
+
+// app.get('/:restaurant_id/menus', (req, res) => { 
+//   return db.client2.get(req.params.restaurant_id, (err, result) => {
+//     if (result) {
+//       res.send(result);
+//       return;
+//     }
+//     const query = `SELECT * FROM bite_menus WHERE restaurant_id = ?`;
+//     const params = [`${req.params.restaurant_id}`];
+//     // eslint-disable-next-line consistent-return
+//     return db.client.execute(query, params, { prepare: true })
+//       // eslint-disable-next-line no-shadow
+//       .then(result => {
+//         let menuObj = parse.parseMenus(result, params[0])
+//         db.client2.setex(req.params.restaurant_id, 3600, JSON.stringify(menuObj));
+//         res.send(menuObj)
+//       })
+//       .catch(err => res.status(500).send(err));
+//   });
+// });
+
 
 app.post('/:restaurant_id/menus', controller.addItem);
 

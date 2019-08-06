@@ -21,7 +21,7 @@ delete from bite_menus where restaurant_id = INPUT and menu = INPUT;
 delete from bite_menus where restaurant_id = INPUT and menu = INPUT and section = INPUT; 
 
 --DELETE ITEM with RESTAURANT ID MENU and SECTION 
-delete from bite_menus where restaurant_id = 9666777 and menu = ' Breakfast' and section = ' Jast' and item = ' Gorgeous Wooden Chips'; 
+DELETE FROM bite_menus WHERE restaurant_id = 9666777 and menu = ' Breakfast' and section = ' Jast' AND item = ' Gorgeous Wooden Chips'; 
 
 --INSERT NEW MENU/SECTION 
 

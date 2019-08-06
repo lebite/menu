@@ -1,71 +1,51 @@
 /* eslint-disable no-restricted-syntax */
 const db = require('./db/index.js');
-
+const parse = require('./db/model.js');
 
 db.client.connect((err) => {
   if (err) {
-    console.log(err);
+    return console.log(err);
   }
   console.log('db connected');
 });
 
 db.client2.on('error', (err) => {
-  console.log("Error " + err);
+  console.log("Error " + err)
 });
 
-const parseMenus = (data, id) => {
-  const menuNames = Array.from(new Set(data.rows.map(row => row.menu)));
-  const result = {
-    restaurant_id: id,
-    menus: [],
-  };
-  for (const menu of menuNames) {
-    const sectionNames = Array.from(new Set(data.rows.filter(row => row.menu === menu).map(row => row.section)));
-    const sectionInfo = [];
-    const itemInfo = []; 
-    for (const s of sectionNames) {
-      const items = data.rows.filter(row => row.section === s).filter(row => row.section === s).map(row => row.item);
-      for (const i of items) {
-        itemInfo.push({
-          item_name: i,
-          item_description: data.rows.filter(row => row.item === i).map(row => row.description)[0],
-          item_price: String(data.rows.filter(row => row.item === i).map(row => row.price)[0]).split(':')[0]
-        });
-      }
-      sectionInfo.push({ section_name: s, items: itemInfo });
-    }
-    result.menus.push({
-      menu_name: menu,
-      sections: sectionInfo,
-    });
-  }
-  return result;
-};
+let count = 1;
 
 module.exports.getMenus = (req, res) => { 
   return db.client2.get(req.params.restaurant_id, (err, result) => {
     if (result) {
-      console.log('cached');
-      const resultJSON = JSON.parse(result);
-      return res.status(200).json(resultJSON);
+      res.send(result);
+      return;
     }
     const query = `SELECT * FROM bite_menus WHERE restaurant_id = ?`;
     const params = [`${req.params.restaurant_id}`];
     return db.client.execute(query, params, { prepare: true })
       .then(result => {
-        db.client2.setex(req.params.restaurant_id, 3600, JSON.stringify(parseMenus(result, params[0])));
-        res.send(parseMenus(result, params[0]))
+        let menuObj = parse.parseMenus(result, params[0])
+        db.client2.set(req.params.restaurant_id, JSON.stringify(menuObj));
+        res.send(menuObj)
       })
-      .catch(err => res.Status(500).send(err));
+      .catch(err => res.status(500).send(err));
   });
 };
 
 // module.exports.getMenus = (req, res) => { 
 //   const query = `SELECT * FROM bite_menus WHERE restaurant_id = ?`;
 //   const params = [`${req.params.restaurant_id}`];
-
 //   db.client.execute(query, params, { prepare: true })
-//     .then(result => res.send(parseMenus(result, params[0])))
+//     .then(result => res.send(parse.parseMenus(result, params[0])))
+//     .catch(err => res.Status(500).send(err));
+// };
+
+// module.exports.getMenus = (req, res) => {
+//   const query = `SELECT menu FROM bite_menus WHERE restaurant_id = ?`;
+//   const params = [`${req.params.restaurant_id}`];
+//   db.client.execute(query, params, { prepare: true })
+//     .then(result => res.send(result))
 //     .catch(err => res.Status(500).send(err));
 // };
 
@@ -86,7 +66,6 @@ module.exports.deleteItem = (req, res) => {
   .then(() => res.sendStatus(200))
   .catch(err => res.status(500).send(err));
 };
-
 
 // Example Params 
 // const params = [1001, 'Dinner', 'Example Section', 'Cereal']
