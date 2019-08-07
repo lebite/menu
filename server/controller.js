@@ -9,37 +9,37 @@ db.client.connect((err) => {
   console.log('db connected');
 });
 
-db.client2.on('error', (err) => {
-  console.log("Error " + err)
-});
+// db.client2.on('error', (err) => {
+//   console.log("Error " + err)
+// });
 
 let count = 1;
 
-module.exports.getMenus = (req, res) => { 
-  return db.client2.get(req.params.restaurant_id, (err, result) => {
-    if (result) {
-      res.send(result);
-      return;
-    }
-    const query = `SELECT * FROM bite_menus WHERE restaurant_id = ?`;
-    const params = [`${req.params.restaurant_id}`];
-    return db.client.execute(query, params, { prepare: true })
-      .then(result => {
-        let menuObj = parse.parseMenus(result, params[0])
-        db.client2.set(req.params.restaurant_id, JSON.stringify(menuObj));
-        res.send(menuObj)
-      })
-      .catch(err => res.status(500).send(err));
-  });
-};
-
 // module.exports.getMenus = (req, res) => { 
-//   const query = `SELECT * FROM bite_menus WHERE restaurant_id = ?`;
-//   const params = [`${req.params.restaurant_id}`];
-//   db.client.execute(query, params, { prepare: true })
-//     .then(result => res.send(parse.parseMenus(result, params[0])))
-//     .catch(err => res.Status(500).send(err));
+//   return db.client2.get(req.params.restaurant_id, (err, result) => {
+//     if (result) {
+//       res.send(result);
+//       return;
+//     }
+//     const query = `SELECT * FROM bite_menus WHERE restaurant_id = ?`;
+//     const params = [`${req.params.restaurant_id}`];
+//     return db.client.execute(query, params, { prepare: true })
+//       .then(result => {
+//         let menuObj = parse.parseMenus(result, params[0])
+//         db.client2.set(req.params.restaurant_id, JSON.stringify(menuObj));
+//         res.send(menuObj)
+//       })
+//       .catch(err => res.status(500).send(err));
+//   });
 // };
+
+module.exports.getMenus = (req, res) => { 
+  const query = `SELECT * FROM bite_menus WHERE restaurant_id = ?`;
+  const params = [`${req.params.restaurant_id}`];
+  db.client.execute(query, params, { prepare: true })
+    .then(result => res.send(parse.parseMenus(result, params[0])))
+    .catch(err => res.Status(500).send(err));
+};
 
 // module.exports.getMenus = (req, res) => {
 //   const query = `SELECT menu FROM bite_menus WHERE restaurant_id = ?`;
