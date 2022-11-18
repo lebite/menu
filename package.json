@@ -48,7 +48,7 @@
     "eslint-plugin-react": "^7.14.2",
     "jest": "^24.8.0",
     "webpack": "^4.35.2",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.12"
   },
   "version": "1.0.0",
   "main": ".eslintrc.js",
